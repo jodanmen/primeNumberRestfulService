@@ -39,7 +39,7 @@ public class PrimeNumberGeneratorSieveAlgo {
 	 * @throws InvalidLimitException if invalid limit is specified - limit should be greater than 0.
 	 */
 	public String getPrimeNumbers(int limit) throws InvalidLimitException {
-		if (limit <= 0) {
+		if (limit <= 0 || limit > Constants.MAX_LIMIT) {
 			throw new InvalidLimitException(limit);
 		}
 		StringBuilder builder = new StringBuilder();

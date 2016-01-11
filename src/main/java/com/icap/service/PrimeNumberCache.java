@@ -22,17 +22,15 @@ public class PrimeNumberCache {
 	
 	private PrimeNumberGeneratorSieveAlgo primeNumberGenerator;
 	
-	private final int MAX_CACHE_VALUE = 1000000;
-	
 	private static final Logger logger = Logger.getLogger(PrimeNumberCache.class);
 	
 	@Autowired
 	public PrimeNumberCache(PrimeNumberGeneratorSieveAlgo primeNumberGenerator) {
-		primeNumbers = new int[MAX_CACHE_VALUE];
+		primeNumbers = new int[Constants.MAX_CACHE_VALUE];
 		this.primeNumberGenerator = primeNumberGenerator;
 		try {
 			if (primeNumberGenerator != null) {
-				this.primeNumbers = Arrays.asList(this.primeNumberGenerator.getPrimeNumbers(MAX_CACHE_VALUE)
+				this.primeNumbers = Arrays.asList(this.primeNumberGenerator.getPrimeNumbers(Constants.MAX_CACHE_VALUE)
 						.split(" "))
 						.stream()
 						.mapToInt(n -> Integer.valueOf(n))
@@ -60,8 +58,8 @@ public class PrimeNumberCache {
 	 * @throws InvalidLimitException if invalid range is specified - range should be greater than 0 and less than 1000000
 	 */
 	public String getPrimeNumbers(int range) throws InvalidLimitException {
-		if (range <= 0 || range > MAX_CACHE_VALUE) {
-			throw new InvalidLimitException("Invalid range specified: " + range + ". Range should be between 1 and " + MAX_CACHE_VALUE);
+		if (range <= 0 || range > Constants.MAX_CACHE_VALUE) {
+			throw new InvalidLimitException("Invalid range specified: " + range + ". Range should be between 1 and " + Constants.MAX_CACHE_VALUE);
 		}
 		StringBuilder stringBuilder = new StringBuilder();
 		int highestValueOfPrime = 0;

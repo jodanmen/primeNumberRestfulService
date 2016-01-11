@@ -37,7 +37,7 @@ public class PrimeNumberController {
 	private PrimeNumberCache primeNumberCache;
 	
 	@RequestMapping("/trialDivision")
-	public PrimeNumbers getPrimeNumberByTrialDivision(@RequestParam(value="range", defaultValue="100") int limit) {
+	public PrimeNumbers getPrimeNumberByTrialDivision(@RequestParam(value="limit", defaultValue="100") int limit) {
 		logger.info("Processing request for prime numbers for limit: " + limit);
 		long id = counter.incrementAndGet();
 		try {
@@ -49,7 +49,7 @@ public class PrimeNumberController {
 	}
 	
 	@RequestMapping("/sieve")
-	public PrimeNumbers getPrimeNumberBySieve(@RequestParam(value="range", defaultValue="100") int limit) {
+	public PrimeNumbers getPrimeNumberBySieve(@RequestParam(value="limit", defaultValue="100") int limit) {
 		logger.info("Processing request for prime numbers for limit: " + limit);
 		long id = counter.incrementAndGet();
 		try {
@@ -61,7 +61,7 @@ public class PrimeNumberController {
 	}
 	
 	@RequestMapping("/cache")
-	public PrimeNumbers getPrimeNumbersFromCache(@RequestParam(value="range", defaultValue="100") int limit) {
+	public PrimeNumbers getPrimeNumbersFromCache(@RequestParam(value="limit", defaultValue="100") int limit) {
 		logger.info("Processing request for prime numbers for limit: " + limit);
 		long id = counter.incrementAndGet();
 		try {
