@@ -19,6 +19,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.icap.primeNumbers.exception.InvalidLimitException;
+import com.icap.service.Constants;
 import com.icap.service.PrimeNumberCache;
 import com.icap.service.PrimeNumberGeneratorSieveAlgo;
 import com.icap.service.PrimeNumberGeneratorTrialDivisionAlgo;
@@ -53,7 +54,7 @@ public class PrimeNumberControllerTest {
 	public void testGetPrimeNumbersByTrialDivision() throws Exception {
 		when(primeNumberGeneratorByTrialDivision.getPrimeNumbers(10)).thenReturn("2 3 5 7");
 		mockMvc.perform(get("/trialDivision")
-				.param("range", "10"))
+				.param("limit", "10"))
 				.andExpect(status().isOk())
 				.andExpect(content().contentType(new MediaType(MediaType.APPLICATION_JSON.getType(),
                         MediaType.APPLICATION_JSON.getSubtype(),
@@ -62,41 +63,41 @@ public class PrimeNumberControllerTest {
 	}
 	
 	@Test
-	public void testGetPrimeNumbersByTrialDivisionWithNegativeRange() throws Exception {
+	public void testGetPrimeNumbersByTrialDivisionWithNegativelimit() throws Exception {
 		when(primeNumberGeneratorByTrialDivision.getPrimeNumbers(-10)).thenThrow(new InvalidLimitException(-10));
 		mockMvc.perform(get("/trialDivision")
-				.param("range", "-10"))
+				.param("limit", "-10"))
 				.andExpect(status().isOk())
 				.andExpect(content().contentType(new MediaType(MediaType.APPLICATION_JSON.getType(),
                         MediaType.APPLICATION_JSON.getSubtype(),
                         Charset.forName("utf8"))))            
-				.andExpect(jsonPath("$.content", is("Invalid range specified: -10. Range must be a positive integer value greater than 0")));
+				.andExpect(jsonPath("$.content", is("Invalid limit specified: -10. Limit must be a positive integer value greater than 0 and less than " + Constants.MAX_LIMIT)));
 	}
 	
 	@Test
-	public void testGetPrimeNumbersByTrialDivisionWithZeroRange() throws Exception {
+	public void testGetPrimeNumbersByTrialDivisionWithZerolimit() throws Exception {
 		when(primeNumberGeneratorByTrialDivision.getPrimeNumbers(0)).thenThrow(new InvalidLimitException(0));
 		mockMvc.perform(get("/trialDivision")
-				.param("range", "0"))
+				.param("limit", "0"))
 				.andExpect(status().isOk())
 				.andExpect(content().contentType(new MediaType(MediaType.APPLICATION_JSON.getType(),
                         MediaType.APPLICATION_JSON.getSubtype(),
                         Charset.forName("utf8"))))            
-				.andExpect(jsonPath("$.content", is("Invalid range specified: 0. Range must be a positive integer value greater than 0")));
+				.andExpect(jsonPath("$.content", is("Invalid limit specified: 0. Limit must be a positive integer value greater than 0 and less than " + Constants.MAX_LIMIT)));
 	}
 	
 	@Test
-	public void testGetPrimeNumbersByTrialDivisionWithTextForRange() throws Exception {
+	public void testGetPrimeNumbersByTrialDivisionWithTextForlimit() throws Exception {
 		mockMvc.perform(get("/trialDivision")
-				.param("range", "a"))
+				.param("limit", "a"))
 				.andExpect(status().isBadRequest());
 	}
 	
 	@Test
-	public void testGetPrimeNumbersByTrialDivisionWithARangeOfOne() throws Exception {
+	public void testGetPrimeNumbersByTrialDivisionWithAlimitOfOne() throws Exception {
 		when(primeNumberGeneratorByTrialDivision.getPrimeNumbers(1)).thenReturn("No Prime Numbers Found");
 		mockMvc.perform(get("/trialDivision")
-				.param("range", "1"))
+				.param("limit", "1"))
 				.andExpect(status().isOk())
 				.andExpect(content().contentType(new MediaType(MediaType.APPLICATION_JSON.getType(),
                         MediaType.APPLICATION_JSON.getSubtype(),
@@ -105,7 +106,7 @@ public class PrimeNumberControllerTest {
 	}
 	
 	@Test
-	public void testGetPrimeNumbersByTrialDivisionWithNoSpecfiedRange() throws Exception {
+	public void testGetPrimeNumbersByTrialDivisionWithNoSpecfiedlimit() throws Exception {
 		when(primeNumberGeneratorByTrialDivision.getPrimeNumbers(100)).thenReturn("2 3 5 7 11 13 17 19 23 29 31 37 41 43 47 53 59 61 67 71 73 79 83 89 97");
 		mockMvc.perform(get("/trialDivision"))
 				.andExpect(status().isOk())
@@ -119,7 +120,7 @@ public class PrimeNumberControllerTest {
 	public void testGetPrimeNumbersBySieve() throws Exception {
 		when(primeNumberGeneratorBySieve.getPrimeNumbers(10)).thenReturn("2 3 5 7");
 		mockMvc.perform(get("/sieve")
-				.param("range", "10"))
+				.param("limit", "10"))
 				.andExpect(status().isOk())
 				.andExpect(content().contentType(new MediaType(MediaType.APPLICATION_JSON.getType(),
                         MediaType.APPLICATION_JSON.getSubtype(),
@@ -128,41 +129,41 @@ public class PrimeNumberControllerTest {
 	}
 	
 	@Test
-	public void testGetPrimeNumbersBySieveWithNegativeRange() throws Exception {
+	public void testGetPrimeNumbersBySieveWithNegativelimit() throws Exception {
 		when(primeNumberGeneratorBySieve.getPrimeNumbers(-10)).thenThrow(new InvalidLimitException(-10));
 		mockMvc.perform(get("/sieve")
-				.param("range", "-10"))
+				.param("limit", "-10"))
 				.andExpect(status().isOk())
 				.andExpect(content().contentType(new MediaType(MediaType.APPLICATION_JSON.getType(),
                         MediaType.APPLICATION_JSON.getSubtype(),
                         Charset.forName("utf8"))))            
-				.andExpect(jsonPath("$.content", is("Invalid range specified: -10. Range must be a positive integer value greater than 0")));
+				.andExpect(jsonPath("$.content", is("Invalid limit specified: -10. Limit must be a positive integer value greater than 0 and less than " + Constants.MAX_LIMIT)));
 	}
 	
 	@Test
-	public void testGetPrimeNumbersBySieveWithZeroRange() throws Exception {
+	public void testGetPrimeNumbersBySieveWithZerolimit() throws Exception {
 		when(primeNumberGeneratorBySieve.getPrimeNumbers(0)).thenThrow(new InvalidLimitException(0));
 		mockMvc.perform(get("/sieve")
-				.param("range", "0"))
+				.param("limit", "0"))
 				.andExpect(status().isOk())
 				.andExpect(content().contentType(new MediaType(MediaType.APPLICATION_JSON.getType(),
                         MediaType.APPLICATION_JSON.getSubtype(),
                         Charset.forName("utf8"))))            
-				.andExpect(jsonPath("$.content", is("Invalid range specified: 0. Range must be a positive integer value greater than 0")));
+				.andExpect(jsonPath("$.content", is("Invalid limit specified: 0. Limit must be a positive integer value greater than 0 and less than " + Constants.MAX_LIMIT)));
 	}
 	
 	@Test
-	public void testGetPrimeNumbersBySieveWithTextForRange() throws Exception {
+	public void testGetPrimeNumbersBySieveWithTextForlimit() throws Exception {
 		mockMvc.perform(get("/sieve")
-				.param("range", "a"))
+				.param("limit", "a"))
 				.andExpect(status().isBadRequest());
 	}
 	
 	@Test
-	public void testGetPrimeNumbersBySieveWithARangeOfOne() throws Exception {
+	public void testGetPrimeNumbersBySieveWithAlimitOfOne() throws Exception {
 		when(primeNumberGeneratorBySieve.getPrimeNumbers(1)).thenReturn("No Prime Numbers Found");
 		mockMvc.perform(get("/sieve")
-				.param("range", "1"))
+				.param("limit", "1"))
 				.andExpect(status().isOk())
 				.andExpect(content().contentType(new MediaType(MediaType.APPLICATION_JSON.getType(),
                         MediaType.APPLICATION_JSON.getSubtype(),
@@ -171,7 +172,7 @@ public class PrimeNumberControllerTest {
 	}
 	
 	@Test
-	public void testGetPrimeNumbersBySieveWithNoSpecfiedRange() throws Exception {
+	public void testGetPrimeNumbersBySieveWithNoSpecfiedlimit() throws Exception {
 		when(primeNumberGeneratorBySieve.getPrimeNumbers(100)).thenReturn("2 3 5 7 11 13 17 19 23 29 31 37 41 43 47 53 59 61 67 71 73 79 83 89 97");
 		mockMvc.perform(get("/sieve"))
 				.andExpect(status().isOk())
@@ -182,7 +183,7 @@ public class PrimeNumberControllerTest {
 	}
 	
 	@Test
-	public void testGetPrimeNumbersFromCacheWithNoSpecfiedRange() throws Exception {
+	public void testGetPrimeNumbersFromCacheWithNoSpecfiedlimit() throws Exception {
 		when(primeNumberCache.getPrimeNumbers(100)).thenReturn("2 3 5 7 11 13 17 19 23 29 31 37 41 43 47 53 59 61 67 71 73 79 83 89 97");
 		mockMvc.perform(get("/cache"))
 				.andExpect(status().isOk())
@@ -193,7 +194,7 @@ public class PrimeNumberControllerTest {
 	}
 	
 	@Test
-	public void testGetPrimeNumbersFromCacheWithSpecfiedRange() throws Exception {
+	public void testGetPrimeNumbersFromCacheWithSpecfiedlimit() throws Exception {
 		when(primeNumberCache.getPrimeNumbers(1000)).thenReturn("2 3 5 7 11 13 17 19 23 29 31 37 41 43 47 53 59 61 67 71 73 79 83"
 				+ " 89 97 101 103 107 109 113 127 131 137 139 149 151 157 163 167 173 179 181 191 193 197 199 211 223 227 229 233 239"
 				+ " 241 251 257 263 269 271 277 281 283 293 307 311 313 317 331 337 347 349 353 359 367 373 379 383 389 397 401 409"
@@ -201,7 +202,7 @@ public class PrimeNumberControllerTest {
 				+ " 601 607 613 617 619 631 641 643 647 653 659 661 673 677 683 691 701 709 719 727 733 739 743 751 757 761 769 773 787"
 				+ " 797 809 811 821 823 827 829 839 853 857 859 863 877 881 883 887 907 911 919 929 937 941 947 953 967 971 977 983 991 997");
 		mockMvc.perform(get("/cache")
-				.param("range", "1000"))
+				.param("limit", "1000"))
 				.andExpect(status().isOk())
 				.andExpect(content().contentType(new MediaType(MediaType.APPLICATION_JSON.getType(),
                         MediaType.APPLICATION_JSON.getSubtype(),
@@ -215,40 +216,40 @@ public class PrimeNumberControllerTest {
 	}
 	
 	@Test
-	public void testGetPrimeNumbersFromCacheWithNegativeRange() throws Exception {
+	public void testGetPrimeNumbersFromCacheWithNegativelimit() throws Exception {
 		when(primeNumberCache.getPrimeNumbers(-10)).thenThrow(new InvalidLimitException(-10));
 		mockMvc.perform(get("/cache")
-				.param("range", "-10"))
+				.param("limit", "-10"))
 				.andExpect(status().isOk())
 				.andExpect(content().contentType(new MediaType(MediaType.APPLICATION_JSON.getType(),
                         MediaType.APPLICATION_JSON.getSubtype(),
                         Charset.forName("utf8"))))            
-				.andExpect(jsonPath("$.content", is("Invalid range specified: -10. Range must be a positive integer value greater than 0")));
+				.andExpect(jsonPath("$.content", is("Invalid limit specified: -10. Limit must be a positive integer value greater than 0 and less than " + Constants.MAX_LIMIT)));
 	}
 	
 	@Test
-	public void testGetPrimeNumbersFromCacheWithZeroRange() throws Exception {
+	public void testGetPrimeNumbersFromCacheWithZerolimit() throws Exception {
 		when(primeNumberCache.getPrimeNumbers(0)).thenThrow(new InvalidLimitException(0));
 		mockMvc.perform(get("/cache")
-				.param("range", "0"))
+				.param("limit", "0"))
 				.andExpect(status().isOk())
 				.andExpect(content().contentType(new MediaType(MediaType.APPLICATION_JSON.getType(),
                         MediaType.APPLICATION_JSON.getSubtype(),
                         Charset.forName("utf8"))))            
-				.andExpect(jsonPath("$.content", is("Invalid range specified: 0. Range must be a positive integer value greater than 0")));
+				.andExpect(jsonPath("$.content", is("Invalid limit specified: 0. Limit must be a positive integer value greater than 0 and less than " + Constants.MAX_LIMIT)));
 	}
 	
 	@Test
-	public void testGetPrimeNumbersFromCacheWithTextForRange() throws Exception {
+	public void testGetPrimeNumbersFromCacheWithTextForlimit() throws Exception {
 		mockMvc.perform(get("/cache")
-				.param("range", "a"))
+				.param("limit", "a"))
 				.andExpect(status().isBadRequest());
 	}
 	
 	@Test
 	public void testControllerWithInvalidUrl() throws Exception {
 		mockMvc.perform(get("/test")
-				.param("range", "1"))
+				.param("limit", "1"))
 				.andExpect(status().isNotFound());
 	}
 	

@@ -58,7 +58,7 @@ public class PrimeNumberControllerIT {
 	@Test
 	public void testGetPrimeNumbersByTrialDivision() throws Exception {
 		mockMvc.perform(get("/trialDivision")
-				.param("range", "10"))
+				.param("limit", "10"))
 				.andExpect(status().isOk())
 				.andExpect(content().contentType(new MediaType(MediaType.APPLICATION_JSON.getType(),
                         MediaType.APPLICATION_JSON.getSubtype(),
@@ -69,7 +69,7 @@ public class PrimeNumberControllerIT {
 	@Test
 	public void testGetPrimeNumbersBySieve() throws Exception {
 		mockMvc.perform(get("/sieve")
-				.param("range", "10"))
+				.param("limit", "10"))
 				.andExpect(status().isOk())
 				.andExpect(content().contentType(new MediaType(MediaType.APPLICATION_JSON.getType(),
                         MediaType.APPLICATION_JSON.getSubtype(),
@@ -80,7 +80,7 @@ public class PrimeNumberControllerIT {
 	@Test
 	public void testGetPrimeNumbersFromCache() throws Exception {
 		mockMvc.perform(get("/cache")
-				.param("range", "10"))
+				.param("limit", "10"))
 				.andExpect(status().isOk())
 				.andExpect(content().contentType(new MediaType(MediaType.APPLICATION_JSON.getType(),
                         MediaType.APPLICATION_JSON.getSubtype(),

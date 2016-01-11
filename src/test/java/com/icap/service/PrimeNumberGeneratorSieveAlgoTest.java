@@ -40,7 +40,7 @@ public class PrimeNumberGeneratorSieveAlgoTest {
 	@Test
 	public void testGetPrimeNumbersWithNegativeLimit() throws InvalidLimitException {
 		expectedEx.expect(InvalidLimitException.class);
-	    expectedEx.expectMessage("Invalid limit specified: -10. Limit must be a positive integer value greater than 0");
+	    expectedEx.expectMessage("Invalid limit specified: -10. Limit must be a positive integer value greater than 0 and less than " + Constants.MAX_LIMIT);
 	    PrimeNumberGeneratorSieveAlgo primeNumberGenerator = new PrimeNumberGeneratorSieveAlgo();
 		primeNumberGenerator.getPrimeNumbers(-10);
 	}
@@ -48,7 +48,7 @@ public class PrimeNumberGeneratorSieveAlgoTest {
 	@Test
 	public void testGetPrimeNumbersWithZeroLimit() throws InvalidLimitException {
 		expectedEx.expect(InvalidLimitException.class);
-	    expectedEx.expectMessage("Invalid limit specified: 0. Limit must be a positive integer value greater than 0");
+	    expectedEx.expectMessage("Invalid limit specified: 0. Limit must be a positive integer value greater than 0 and less than " + Constants.MAX_LIMIT);
 	    PrimeNumberGeneratorSieveAlgo primeNumberGenerator = new PrimeNumberGeneratorSieveAlgo();
 		primeNumberGenerator.getPrimeNumbers(0);
 	}
@@ -56,7 +56,7 @@ public class PrimeNumberGeneratorSieveAlgoTest {
 	@Test
 	public void testGetPrimeNumbersLimitAboveMaxLimit() throws InvalidLimitException {
 		expectedEx.expect(InvalidLimitException.class);
-	    expectedEx.expectMessage("Invalid limit specified: 1000000001. Limit must be a positive integer value greater than 0");
+	    expectedEx.expectMessage("Invalid limit specified: 1000000001. Limit must be a positive integer value greater than 0 and less than " + Constants.MAX_LIMIT);
 	    PrimeNumberGeneratorSieveAlgo primeNumberGenerator = new PrimeNumberGeneratorSieveAlgo();
 		primeNumberGenerator.getPrimeNumbers(1000000001);
 	}
