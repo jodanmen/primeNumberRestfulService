@@ -20,37 +20,45 @@ public class PrimeNumberGeneratorSieveAlgoTest {
 	}
 	
 	@Test
-	public void testGetPrimeNumbersWithRangeEqualsOne() throws InvalidLimitException {
+	public void testGetPrimeNumbersWithLimitEqualsOne() throws InvalidLimitException {
 		PrimeNumberGeneratorSieveAlgo primeNumberGenerator = new PrimeNumberGeneratorSieveAlgo();
 		assertEquals("No Prime Numbers Found", primeNumberGenerator.getPrimeNumbers(1));
 	}
 	
 	@Test
-	public void testGetPrimeNumbersWithRangeOf2() throws InvalidLimitException {
+	public void testGetPrimeNumbersWithLimitOf2() throws InvalidLimitException {
 		PrimeNumberGeneratorSieveAlgo primeNumberGenerator = new PrimeNumberGeneratorSieveAlgo();
 		assertEquals("2", primeNumberGenerator.getPrimeNumbers(2));
 	}
 	
 	@Test
-	public void testGetPrimeNumbersWithRangeOf3() throws InvalidLimitException {
+	public void testGetPrimeNumbersWithLimitOf3() throws InvalidLimitException {
 		PrimeNumberGeneratorSieveAlgo primeNumberGenerator = new PrimeNumberGeneratorSieveAlgo();
 		assertEquals("2 3", primeNumberGenerator.getPrimeNumbers(3));
 	}
 	
 	@Test
-	public void testGetPrimeNumbersWithNegativeRange() throws InvalidLimitException {
+	public void testGetPrimeNumbersWithNegativeLimit() throws InvalidLimitException {
 		expectedEx.expect(InvalidLimitException.class);
-	    expectedEx.expectMessage("Invalid range specified: -10. Range must be a positive integer value greater than 0");
+	    expectedEx.expectMessage("Invalid limit specified: -10. Limit must be a positive integer value greater than 0");
 	    PrimeNumberGeneratorSieveAlgo primeNumberGenerator = new PrimeNumberGeneratorSieveAlgo();
 		primeNumberGenerator.getPrimeNumbers(-10);
 	}
 	
 	@Test
-	public void testGetPrimeNumbersWithZeroRange() throws InvalidLimitException {
+	public void testGetPrimeNumbersWithZeroLimit() throws InvalidLimitException {
 		expectedEx.expect(InvalidLimitException.class);
-	    expectedEx.expectMessage("Invalid range specified: 0. Range must be a positive integer value greater than 0");
+	    expectedEx.expectMessage("Invalid limit specified: 0. Limit must be a positive integer value greater than 0");
 	    PrimeNumberGeneratorSieveAlgo primeNumberGenerator = new PrimeNumberGeneratorSieveAlgo();
 		primeNumberGenerator.getPrimeNumbers(0);
+	}
+	
+	@Test
+	public void testGetPrimeNumbersLimitAboveMaxLimit() throws InvalidLimitException {
+		expectedEx.expect(InvalidLimitException.class);
+	    expectedEx.expectMessage("Invalid limit specified: 1000000001. Limit must be a positive integer value greater than 0");
+	    PrimeNumberGeneratorSieveAlgo primeNumberGenerator = new PrimeNumberGeneratorSieveAlgo();
+		primeNumberGenerator.getPrimeNumbers(1000000001);
 	}
 
 }

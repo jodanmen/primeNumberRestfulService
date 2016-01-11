@@ -20,17 +20,25 @@ public class PrimeNumberGeneratorTrialDivisionAlgoTest {
 	}
 	
 	@Test
-	public void testGetPrimeNumbersWithRangeEqualsOne() throws InvalidLimitException {
+	public void testGetPrimeNumbersWithLimitEqualsOne() throws InvalidLimitException {
 		PrimeNumberGeneratorTrialDivisionAlgo primeNumberGenerator = new PrimeNumberGeneratorTrialDivisionAlgo();
 		assertEquals("No Prime Numbers Found", primeNumberGenerator.getPrimeNumbers(1));
 	}
 	
 	@Test
-	public void testGetPrimeNumbersWithNegativeRange() throws InvalidLimitException {
+	public void testGetPrimeNumbersWithNegativeLimit() throws InvalidLimitException {
 		expectedEx.expect(InvalidLimitException.class);
-	    expectedEx.expectMessage("Invalid range specified: -10. Range must be a positive integer value greater than 0");
+	    expectedEx.expectMessage("Invalid limit specified: -10. Limit must be a positive integer value greater than 0");
 		PrimeNumberGeneratorTrialDivisionAlgo primeNumberGenerator = new PrimeNumberGeneratorTrialDivisionAlgo();
 		primeNumberGenerator.getPrimeNumbers(-10);
+	}
+	
+	@Test
+	public void testGetPrimeNumbersWithLimitAboveMaxLimit() throws InvalidLimitException {
+		expectedEx.expect(InvalidLimitException.class);
+	    expectedEx.expectMessage("Invalid limit specified: 1000000001. Limit must be a positive integer value greater than 0");
+		PrimeNumberGeneratorTrialDivisionAlgo primeNumberGenerator = new PrimeNumberGeneratorTrialDivisionAlgo();
+		primeNumberGenerator.getPrimeNumbers(1000000001);
 	}
 	
 	@Test

@@ -53,7 +53,7 @@ public class PrimeNumberGeneratorTrialDivisionAlgo {
 	 */
 	public String getPrimeNumbers(int limit) throws InvalidLimitException {
 		logger.info("Computing prime numbers for range: " + limit);
-		if (limit <= 0) {
+		if (limit <= 0 || limit > Constants.MAX_LIMIT) {
 			throw new InvalidLimitException(limit);
 		}
 		String result = derivePrimeNumbers(limit);
